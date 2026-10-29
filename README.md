@@ -6,8 +6,8 @@
 The validator of the [Open Intent Schema (OIS)](https://openintentschema.io) for Node.js, the
 open data standard that links what was required to what was built and to the evidence in
 between. It checks records, bundles and Quality Passports against the specification: the JSON
-Schema of Appendix B, the integrity rules R1 to R17, the profile `regulated/v0.1`, DSSE
-signatures and keyless Sigstore signatures. And it recomputes the intent coverage a passport
+Schema of Appendix B, the integrity rules R1 to R5 and R8 to R17, the profile `regulated/v0.1`,
+DSSE signatures and keyless Sigstore signatures. And it recomputes the intent coverage a passport
 declares.
 
 It is the second implementation of the validator, next to the Python
