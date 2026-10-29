@@ -5,7 +5,8 @@ Guidance for coding agents and new contributors. Start with [README.md](README.m
 ## What this repository is
 
 The reference tools of the Open Intent Schema (OIS) in JavaScript: one command, `ois`, with
-`validate`, a second implementation of the validator next to the Python one in
+`validate` and `coverage`, a second implementation of the validator and of the coverage method
+next to the Python one in
 [openintentschema/tools](https://github.com/openintentschema/tools). Published on npm as
 `ois-tools` (Node.js 24+, TypeScript, Apache-2.0), also usable as a library.
 

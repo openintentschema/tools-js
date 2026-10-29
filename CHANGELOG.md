@@ -5,6 +5,12 @@ change behaviour.
 
 ## Unreleased
 
+## 0.2.0
+
+- `ois coverage`: intent coverage by the reference method of Appendix D, per criterion, with the
+  check of what a passport declares; text and Markdown output.
+- `coverage()`, `passportCoverage()` and `collect()` in the library.
+
 ## 0.1.0
 
 - `ois validate`: Appendix B, R1 to R17, the profile `regulated/v0.1`, DSSE and keyless Sigstore

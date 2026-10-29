@@ -2,11 +2,13 @@
 
 import { readFileSync } from 'node:fs';
 
+import { main as coverage } from './coverage-cli.ts';
 import { type Io, main as validate } from './validate-cli.ts';
 
 const EXIT_USAGE = 2;
 const COMMANDS: Record<string, [string, (argv: string[], io: Io) => number]> = {
   validate: ['check records, bundles and passports against the specification', validate],
+  coverage: ['show intent coverage per criterion, check what a passport declares', coverage],
 };
 
 export const VERSION: string = JSON.parse(

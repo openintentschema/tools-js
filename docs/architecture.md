@@ -30,7 +30,9 @@ against the same fixtures; schema messages may differ, rules and levels may not.
 | `keyless.ts` | Sigstore bundles, verified offline with `@sigstore/verify` against trusted roots |
 | `validator.ts` | `validate()`: signatures, schema, rules |
 | `sarif.ts` | SARIF 2.1.0 output, with line numbers from a JSON scanner |
-| `main.ts`, `validate-cli.ts`, `cli.ts` | the `ois` command |
+| `collect.ts` | the records of JSON files and directories, each once (R10); latest approved intents |
+| `coverage.ts` | intent coverage by the reference method of Appendix D and its variants |
+| `main.ts`, `validate-cli.ts`, `coverage-cli.ts`, `cli.ts` | the `ois` command |
 
 ## Design decisions
 
@@ -44,4 +46,9 @@ against the same fixtures; schema messages may differ, rules and levels may not.
 - **Keyless without a fixed identity.** A bundle verifies when its certificate chains to a given
   trusted root and its transparency log entry holds; the certificate identity (issuer, subject)
   is then matched to actors by R12, not fixed in advance.
+- **Coverage rounds like Python.** Values are rounded to four decimals, half to even on exact
+  ties, and printed as Python prints floats, so declared values written by either implementation
+  are checked alike.
+- **JSON only.** Records are read from JSON; authored YAML drafts never count for coverage, and
+  reading YAML exactly as section 7 requires is left to the Python tools.
 - **No network access.** Trusted keys and roots are files the verifier chooses.

@@ -7,11 +7,13 @@ The validator of the [Open Intent Schema (OIS)](https://openintentschema.io) for
 open data standard that links what was required to what was built and to the evidence in
 between. It checks records, bundles and Quality Passports against the specification: the JSON
 Schema of Appendix B, the integrity rules R1 to R17, the profile `regulated/v0.1`, DSSE
-signatures and keyless Sigstore signatures.
+signatures and keyless Sigstore signatures. And it recomputes the intent coverage a passport
+declares.
 
 It is the second implementation of the validator, next to the Python
 [`ois-tools`](https://github.com/openintentschema/tools), and passes the same conformance
-fixtures. The Python package also writes records; this one checks them.
+fixtures. The Python package also writes records; this one checks them: `ois validate` and
+`ois coverage`.
 
 ## Install
 
@@ -60,6 +62,32 @@ Signatures are checked offline: DSSE envelopes with Ed25519 or ECDSA keys you tr
 bundles against trusted roots you give. The signer's key id or certificate identity then counts
 for R12, so a context recorded and signed by another actor is attested.
 
+## Coverage
+
+```bash
+ois coverage passport.json                        # also checks the coverage the passport declares
+ois coverage passport.dsse.json --trusted-key keys/   # with the attested variant
+ois coverage .ois/ --build "$BUILD"               # before the passport: what is still missing
+ois coverage passport.json --format markdown >> "$GITHUB_STEP_SUMMARY"
+```
+
+```
+https://ois.acme.example/intents/INT-142@1#AC-1  not covered
+    no evidence
+https://ois.acme.example/intents/INT-142@1#AC-2  covered  https://ois.acme.example/evidence/EV-9021
+intentCoverage 0.5 (declared 0.5)
+intentCoverageAttested 0.0
+intentCoverageWeighted 0.5
+intentCoverageDiverse 0.5
+```
+
+Intent coverage follows the reference method of Appendix D, with its attested, weighted and
+diverse variants. `--intent` and `--scope` choose what counts for records; a passport names its
+own. Records are read from JSON files and directories; YAML drafts are read by the Python tools.
+Exit code 1 means a declared value differs from the computed one, at the precision the passport
+declares; 2 that a file could not be read or the release subject is missing. The output is the
+same as that of the Python `ois coverage`.
+
 ## As a library
 
 ```js
@@ -71,13 +99,15 @@ const result = validate(passport, { trustedKeys: loadTrustedKeys(['keys/']) });
 if (!result.conforms) console.error(result.reports);
 ```
 
-`validate(document, { trustedKeys, trustedRoots, profiles })` returns `{ conforms, reports }`.
+`validate(document, { trustedKeys, trustedRoots, profiles })` returns `{ conforms, reports }`;
+`passportCoverage(passport, trustedKeys, trustedRoots)` and `coverage(records, { subject,
+intents, scope })` return the coverage per criterion and its `measurements()`.
 `loadTrustedRoots(files)` reads Sigstore trusted roots, `resolveProfile(name)` a profile URI.
 
 ## Privacy
 
-`ois validate` opens no network connection. It reads the files and keys it is given and prints
-the result.
+`ois validate` and `ois coverage` open no network connection. They read the files and keys they
+are given and print the result.
 
 ## Documentation
 

@@ -1,7 +1,7 @@
 {
   "name": "ois-tools",
-  "version": "0.1.0",
-  "description": "Reference tools for the Open Intent Schema (OIS) in JavaScript: validate records, bundles and Quality Passports.",
+  "version": "0.2.0",
+  "description": "Reference tools for the Open Intent Schema (OIS) in JavaScript: validate records, bundles and Quality Passports and recompute their intent coverage.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
