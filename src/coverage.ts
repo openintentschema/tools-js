@@ -10,7 +10,7 @@ import { criterion as criterionOf, selfDeclared } from './rules.ts';
 import { isObject, STATEMENT_TYPE } from './schema.ts';
 import { isEnvelope, openEnvelope, type TrustedKey } from './signing.ts';
 
-export const METHOD = 'https://ois.example/methods/basic-intent-coverage/v0.1'; // placeholder until RFC #6
+export const METHOD = 'https://openintentschema.io/methods/basic-intent-coverage/v0.1';
 const NAMES = [
   'intentCoverage',
   'intentCoverageAttested',

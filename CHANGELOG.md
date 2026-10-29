@@ -5,6 +5,13 @@ change behaviour.
 
 ## Unreleased
 
+## 0.3.0
+
+- Draft 5 of the specification: the passport predicate type, the schema `$id` and the coverage
+  method URI are under `https://openintentschema.io/`; passports with the old placeholder type
+  are rejected.
+- R16, R17 and the rule IDs `schema` and `signature` are rules of the specification.
+
 ## 0.2.0
 
 - `ois coverage`: intent coverage by the reference method of Appendix D, per criterion, with the
