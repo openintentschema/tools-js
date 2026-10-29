@@ -25,6 +25,15 @@ npm install --save-dev ois-tools              # in a project: npx ois validate p
 
 Node.js 24 or later.
 
+## Official packages
+
+Published only as [`ois-tools` on PyPI](https://pypi.org/project/ois-tools/),
+[`ois-tools` on npm](https://www.npmjs.com/package/ois-tools) and
+`ghcr.io/openintentschema/ois-tools`, each built and signed by a workflow of the
+`openintentschema` organization on GitHub. A package under another name or scope is not part of
+the project. How to check where a download was built:
+[Official packages](https://openintentschema.io/develop/tools/#official-packages).
+
 ## Validate
 
 ```bash
