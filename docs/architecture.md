@@ -4,8 +4,9 @@
 
 The validator follows the specification and the conformance fixtures, not the Python code. The
 modules mirror those of the Python `ois-tools` so that a change to a rule is easy to find in
-both, but each rule is written from the specification and `fixtures/README.md`. CI checks both
-against the same fixtures; schema messages may differ, rules and levels may not.
+both, but each rule is written from the specification and `fixtures/README.md`. CI runs both on
+the same fixtures (`scripts/compare.ts`); schema messages may differ, rules, levels and paths may
+not.
 
 ## Flow of one check
 

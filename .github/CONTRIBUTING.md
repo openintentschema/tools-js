@@ -30,7 +30,8 @@ git commit -s -m "Describe your change"
 - CI must pass: `npm run check` and `npm test` on every supported Node.js version.
 - User-visible changes get a line under "Unreleased" in `CHANGELOG.md`.
 
-[docs/architecture.md](../docs/architecture.md) shows how the code is organised. Security issues
+[docs/development.md](../docs/development.md) shows the checks, the sync and the releases;
+[docs/architecture.md](../docs/architecture.md) how the code is organised. Security issues
 are reported privately, see [SECURITY.md](SECURITY.md).
 
 ## License

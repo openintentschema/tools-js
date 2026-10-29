@@ -25,6 +25,8 @@ product or vendor.
 | `tests/` | tests; `fixtures/` and `examples/` are copies from the specification |
 | `schema/` | copy of Appendix B, shipped in the package |
 | `scripts/sync-spec.ts`, `spec.lock` | copy schema, examples and fixtures; the specification commit they come from |
+| `scripts/compare.ts` | compare the results with the Python tools on every fixture |
+| `docs/` | [architecture.md](docs/architecture.md) (design decisions), [development.md](docs/development.md) (checks, sync, comparison, releases) |
 | `.github/` | CI and release workflows, templates, contributing guide, Code of Conduct, security policy |
 
 ## Commands
@@ -35,6 +37,7 @@ npm test                                 # all tests, including every conformanc
 npm run check                            # strict type check and Biome (lint and format)
 npm run build                            # dist/ for the package
 node scripts/sync-spec.ts ../openintentschema   # update the copies from a clean checkout
+node scripts/compare.ts ../tools/.venv/bin/ois  # same results as the Python tools
 ```
 
 Tests and scripts run as TypeScript directly (Node.js type stripping); only `npm run build`
@@ -44,7 +47,8 @@ compiles.
 
 - Never edit the copies in `tests/fixtures/`, `tests/examples/` or `schema/`; change the
   specification repository and sync.
-- A new or changed rule starts as an RFC there, then lands in both implementations.
+- A new or changed rule starts as an RFC there, then lands in both implementations;
+  `scripts/compare.ts` and its CI job show any difference.
 - Tests first; a bug fix starts with a test that shows the bug.
 - No network access, and only syntax that Node.js can strip (`erasableSyntaxOnly`).
 - Keep `docs/architecture.md` current with design decisions, `CHANGELOG.md` with user-visible
