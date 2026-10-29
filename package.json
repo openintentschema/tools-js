@@ -1,0 +1,56 @@
+{
+  "name": "ois-tools",
+  "version": "0.1.0",
+  "description": "Reference tools for the Open Intent Schema (OIS) in JavaScript: validate records, bundles and Quality Passports.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openintentschema/tools-js.git"
+  },
+  "homepage": "https://openintentschema.io/develop/tools/",
+  "keywords": [
+    "ois",
+    "open-intent-schema",
+    "validator",
+    "in-toto",
+    "dsse",
+    "sigstore",
+    "quality-passport"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "ois": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "schema"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "tsc --noEmit && biome check .",
+    "test": "node --test 'tests/**/*.test.ts'",
+    "sync-spec": "node scripts/sync-spec.ts",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@sigstore/bundle": "5.0.0",
+    "@sigstore/protobuf-specs": "0.5.2",
+    "@sigstore/verify": "4.1.2",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.4",
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2"
+  }
+}
