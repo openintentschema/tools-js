@@ -8,8 +8,9 @@
 // coverage: the same output, error output and exit code; for passports also with trust and as
 // Markdown.
 
-import { spawnSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
+import { availableParallelism } from 'node:os';
 import { join, relative } from 'node:path';
 
 import { main, VERSION } from '../src/main.ts';
@@ -40,11 +41,34 @@ if (!python.length) {
   process.exit(2);
 }
 
-function py(args: string[]): Run {
+function py(args: string[]): Promise<Run> {
   const [command = '', ...rest] = python;
-  const done = spawnSync(command, [...rest, ...args], { cwd: ROOT, encoding: 'utf8' });
-  if (done.error) throw done.error;
-  return { code: done.status ?? -1, out: done.stdout, err: done.stderr };
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, [...rest, ...args], { cwd: ROOT });
+    const run = { code: -1, out: '', err: '' };
+    child.stdout.on('data', (chunk) => {
+      run.out += chunk;
+    });
+    child.stderr.on('data', (chunk) => {
+      run.err += chunk;
+    });
+    child.on('error', reject);
+    child.on('close', (code) => resolve({ ...run, code: code ?? -1 }));
+  });
+}
+
+/** The Python runs, as many at a time as there are cores, in the order given. */
+async function pyAll(calls: string[][]): Promise<Run[]> {
+  const results: Run[] = new Array(calls.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < calls.length) {
+      const index = next++;
+      results[index] = await py(calls[index] ?? []);
+    }
+  };
+  await Promise.all(Array.from({ length: availableParallelism() }, worker));
+  return results;
 }
 
 function js(args: string[]): Run {
@@ -73,7 +97,7 @@ const files = ['valid', 'invalid']
 const problems: string[] = [];
 
 const validate = ['validate', '--format', 'json', ...TRUST, ...files];
-const pythonReports = JSON.parse(py(validate).out) as Reported[];
+const pythonReports = JSON.parse((await py(validate)).out) as Reported[];
 const jsReports = JSON.parse(js(validate).out) as Reported[];
 for (const [index, file] of files.entries()) {
   const key = (r: Reported['reports'][number]) =>
@@ -89,19 +113,19 @@ for (const [index, file] of files.entries()) {
 
 const passport = (file: string) =>
   /"(_type|payloadType|mediaType)"/.test(readFileSync(join(ROOT, file), 'utf8'));
-for (const file of files) {
-  const variants = passport(file)
+const calls = files.flatMap((file) =>
+  (passport(file)
     ? [[], TRUST, ['--format', 'markdown'], [...TRUST, '--format', 'markdown']]
-    : [[]];
-  for (const extra of variants) {
-    const args = ['coverage', file, ...extra];
-    const a = py(args);
-    const b = js(args);
-    if (a.code !== b.code || a.out !== b.out || a.err !== b.err) {
-      problems.push(
-        `${args.join(' ')}: Python exit ${a.code}, JS exit ${b.code}\n${a.out}${a.err}---\n${b.out}${b.err}`,
-      );
-    }
+    : [[]]
+  ).map((extra) => ['coverage', file, ...extra]),
+);
+for (const [index, a] of (await pyAll(calls)).entries()) {
+  const args = calls[index] ?? [];
+  const b = js(args);
+  if (a.code !== b.code || a.out !== b.out || a.err !== b.err) {
+    problems.push(
+      `${args.join(' ')}: Python exit ${a.code}, JS exit ${b.code}\n${a.out}${a.err}---\n${b.out}${b.err}`,
+    );
   }
 }
 
