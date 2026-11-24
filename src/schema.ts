@@ -8,7 +8,7 @@ import formatsModule from 'ajv-formats';
 import type { Report } from './report.ts';
 
 export const STATEMENT_TYPE = 'https://in-toto.io/Statement/v1';
-export const PASSPORT_PREDICATE_TYPE = 'https://ois.example/passport/v0.1'; // placeholder until the domain is set
+export const PASSPORT_PREDICATE_TYPE = 'https://openintentschema.io/passport/v0.1';
 export const RECORD_TYPES = ['intent', 'artifact', 'actor', 'evidence', 'decision', 'finding'];
 
 type Schema = { $id: string; $defs: Record<string, { properties?: Record<string, unknown> }> };

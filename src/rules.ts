@@ -288,7 +288,7 @@ function* r15PassportIntents(document: Document): Generator<Report> {
   }
 }
 
-/** R16 (proposed): a passport carries an approved or passed release decision for a build whose
+/** R16: a passport carries an approved or passed release decision for a build whose
  * digest matches a subject of the statement. */
 function* r16ReleaseDecision(document: Document): Generator<Report> {
   if (document.passport === undefined) return;
@@ -310,7 +310,7 @@ function* r16ReleaseDecision(document: Document): Generator<Report> {
   yield report('violation', 'R16', message, '$.predicate.records');
 }
 
-/** R17 (proposed): intent and criterion digests match their content (section 6.4). */
+/** R17: intent and criterion digests match their content (section 6.4). */
 function* r17Digests(document: Document): Generator<Report> {
   for (const entry of document.ofType('intent')) {
     const intent = entry.record;
