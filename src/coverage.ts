@@ -256,8 +256,7 @@ function meets(measures: OisRecord[], target: OisRecord): boolean {
     (m) =>
       m.name === target.metric &&
       typeof m.value === 'number' &&
-      compare !== undefined &&
-      compare(m.value, target.value),
+      compare?.(m.value, target.value) === true,
   );
 }
 
