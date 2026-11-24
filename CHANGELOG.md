@@ -20,6 +20,7 @@ change behaviour.
 
 ## 0.1.0
 
-- `ois validate`: Appendix B, R1 to R17, the profile `regulated/v0.1`, DSSE and keyless Sigstore
-  signatures; text, JSON and SARIF output. Passes every conformance fixture of the specification.
+- `ois validate`: Appendix B, R1 to R5 and R8 to R17, the profile `regulated/v0.1`, DSSE and
+  keyless Sigstore signatures; text, JSON and SARIF output. Passes every conformance fixture of
+  the specification.
 - `validate()` and the loaders for keys and trusted roots as a library.

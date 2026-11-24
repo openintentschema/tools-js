@@ -1,7 +1,7 @@
 // Compare this implementation with the Python ois-tools on every conformance fixture.
 //
 //   node scripts/compare.ts <command that runs the Python ois>...
-//   node scripts/compare.ts uvx --from 'ois-tools[sigstore]==0.12.0' ois
+//   node scripts/compare.ts uvx --from 'ois-tools[sigstore]==<version>' ois
 //
 // validate: per file the same (rule, level, path) reports, and the same message for the
 // integrity and profile rules; schema and Sigstore library messages are worded differently.

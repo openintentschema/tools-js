@@ -30,7 +30,7 @@ Node.js 24 or later.
 Published only as [`ois-tools` on PyPI](https://pypi.org/project/ois-tools/),
 [`ois-tools` on npm](https://www.npmjs.com/package/ois-tools) and
 `ghcr.io/openintentschema/ois-tools`, each built and signed by a workflow of the
-`openintentschema` organization on GitHub. A package under another name or scope is not part of
+`openintentschema` organization on GitHub (on npm from version 0.2.0; 0.1.0 was published by hand). A package under another name or scope is not part of
 the project. How to check where a download was built:
 [Official packages](https://openintentschema.io/develop/tools/#official-packages).
 
@@ -53,7 +53,8 @@ ois validate passport.json --format sarif > ois.sarif
 
 Exit code 0 means every file conforms (warnings and info allowed), 1 a violation, 2 that an
 argument or file could not be read. Rules, levels, paths, exit codes and formats are the same as
-those of the Python `ois validate`; only the wording of schema errors differs.
+those of the Python `ois validate`; only the wording of schema errors, of Sigstore verification
+failures and of JSON parse errors differs.
 
 Each report has a level, a rule and a JSONPath:
 

@@ -5,8 +5,8 @@
 The validator follows the specification and the conformance fixtures, not the Python code. The
 modules mirror those of the Python `ois-tools` so that a change to a rule is easy to find in
 both, but each rule is written from the specification and `fixtures/README.md`. CI runs both on
-the same fixtures (`scripts/compare.ts`); schema messages may differ, rules, levels and paths may
-not.
+the same fixtures (`scripts/compare.ts`); the messages of schema, Sigstore and JSON errors may
+differ, rules, levels and paths may not.
 
 ## Flow of one check
 
@@ -43,7 +43,8 @@ not.
   canonical JSON and the rules use Node.js only.
 - **Same output as the Python tools.** Rules, levels, paths, messages of the integrity rules, exit
   codes and the JSON and SARIF formats match, so either implementation can replace the other in
-  a pipeline. Schema messages come from Ajv and are worded differently.
+  a pipeline. Schema messages come from Ajv, keyless verification messages from the Sigstore
+  library and JSON errors from the runtime; they are worded differently.
 - **Keyless without a fixed identity.** A bundle verifies when its certificate chains to a given
   trusted root and its transparency log entry holds; the certificate identity (issuer, subject)
   is then matched to actors by R12, not fixed in advance.

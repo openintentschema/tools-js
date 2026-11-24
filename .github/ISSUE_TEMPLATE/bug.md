@@ -1,6 +1,6 @@
 ---
 name: Bug
-about: ois validate crashes, writes something wrong, or reports something the specification does not say
+about: ois validate or ois coverage crashes, or reports something the specification does not say
 title: ""
 labels: bug
 ---
