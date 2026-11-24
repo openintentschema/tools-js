@@ -55,6 +55,9 @@ When the copied fixtures change what the validator reports, change both implemen
 3. Push a tag: `git tag v<version> && git push origin v<version>`, then approve the job in the
    `npm` environment.
 
+When a release follows a new Python release (`OIS_TOOLS`), publish the Python tools first: the
+comparison job installs that version from PyPI and fails until it is there.
+
 The workflow `.github/workflows/release.yml` checks that tag and version match, runs the tests,
 packs the package, smoke-tests it from a clean install and publishes it to npm with trusted
 publishing: no stored token, and npm records a signed provenance of where it was built. The `npm`
